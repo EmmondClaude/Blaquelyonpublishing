@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-ej-ink text-ej-bone font-sans antialiased;
+    /* The house ground — warm light raking across vinyl black. Fixed so every
+       route sits in the same room (one coherent world). */
+    background-image: theme("backgroundImage.ej-nocturne");
+    background-attachment: fixed;
+  }
+
+  /* Editorial serif defaults — real ligatures, near-zero tracking on the big face. */
+  .font-display {
+    font-feature-settings: "liga" 1, "dlig" 1, "calt" 1;
+    letter-spacing: -0.01em;
+  }
+
+  /* Focus ring tuned for the dark ground — the default ring vanishes on noir.
+     Bright, on-brand, always visible (a11y non-negotiable). */
+  :focus-visible {
+    outline: 2px solid theme("colors.ej.gold-bright");
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: theme("colors.ej.rose");
+    color: theme("colors.ej.noir");
+  }
+}
+
+@layer components {
+  /* The editorial column the whole site breathes inside. */
+  .ej-container {
+    @apply mx-auto w-full max-w-editorial px-6 sm:px-8 lg:px-12;
+  }
+
+  /* Small-caps label / kicker — the mono meta voice (credits, section tags). */
+  .ej-label {
+    @apply font-mono text-xs uppercase tracking-label text-ej-gold;
+  }
+
+  /* The thin gold hairline used as a section divider — a Cartier signal. */
+  .ej-rule {
+    @apply h-px w-full border-0 bg-ej-gold-rule;
+  }
+
+  /* Primary CTA — the publishing contact action. Gold on oxblood, the one button
+     that must always be reachable with zero motion. */
+  .ej-cta {
+    @apply inline-flex items-center justify-center gap-2 rounded-full
+      border border-ej-gold/60 bg-ej-gold/10 px-7 py-3 font-mono text-xs
+      uppercase tracking-label text-ej-gold-bright transition-colors
+      hover:border-ej-gold hover:bg-ej-gold/20 focus-visible:bg-ej-gold/20;
+  }
+
+  /* Form control — bone ink on a recessed oxblood field, gold focus edge. */
+  .ej-input {
+    @apply w-full rounded-md border border-ej-gold-dim/40 bg-ej-noir/60 px-4 py-3
+      font-sans text-base text-ej-bone placeholder:text-ej-ash
+      transition-colors focus:border-ej-gold focus:outline-none focus:ring-1
+      focus:ring-ej-gold/50;
+  }
+  .ej-input[aria-invalid="true"] {
+    @apply border-ej-rose-dim focus:border-ej-rose focus:ring-ej-rose/40;
+  }
+
+  /* Secondary / ghost action. */
+  .ej-link {
+    @apply font-mono text-xs uppercase tracking-label text-ej-smoke
+      underline-offset-4 transition-colors hover:text-ej-bone hover:underline;
+  }
+
+  /* Card surface — raised oxblood panel with a hairline gold edge. */
+  .ej-card {
+    @apply rounded-lg border border-ej-gold-dim/30 bg-ej-wine/30 shadow-ej-lift
+      backdrop-blur-[2px] transition-colors hover:border-ej-gold/50;
+  }
+}
+
+/* Reduced motion: resolve every CSS entrance to its rest state instantly.
+   Because the real content is always in the DOM, this is a no-op gate. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
