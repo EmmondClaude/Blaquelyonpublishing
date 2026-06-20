@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { PosterFrame } from "@/components/hero/PosterFrame";
+import { ReactiveHero } from "@/components/hero/ReactiveHero";
 import { Section } from "@/components/ui/Section";
 import { brand, accolades, featuredSong, roster } from "@/lib/content";
 
@@ -44,16 +45,13 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* The hero subject lives here — Higgsfield "Emmond" portrait render. */}
-          <PosterFrame
-            label="HERO · Emmond portrait"
-            soul="Emmond"
-            aspect="aspect-[4/5]"
-            note="Higgsfield handoff: single raking light, three-quarter pose, oxblood/gold nocturne, clean-silhouette PNG on a void ground (doubles as poster + cut-out + 3D source)."
-          />
+          {/* The reactive hero — a live spinning vinyl, gated behind a poster
+              fallback for reduced-motion / no-WebGL. The Higgsfield "Emmond"
+              portrait composites in (or becomes the pinned scroll beat) next. */}
+          <ReactiveHero />
         </div>
 
-        {/* The one scroll beat lands here in the 3D pass — marked, not faked yet. */}
+        {/* The one pinned scroll beat (Lacoste-style reveal) mounts here next. */}
         <p className="mt-16 font-mono text-[0.7rem] uppercase tracking-label text-ej-ash animate-ej-glow">
           ↓ Scroll — the one beat (Lacoste-style reveal) mounts here next pass
         </p>
