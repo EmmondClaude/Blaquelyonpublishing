@@ -3,27 +3,34 @@
 import { useEffect, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import * as THREE from "three";
-import { Lighting, ReactiveVinyl } from "@/components/hero/vinyl";
+import {
+  Lighting,
+  ScrollVinyl,
+  type ScrollProgress,
+} from "@/components/hero/vinyl";
 
 /**
- * The reactive hero canvas (skill move #1). Mounts the shared vinyl in its
- * cursor-follow controller. Loaded ONLY client-side via next/dynamic (ReactiveHero).
- * The loop pauses when the hero is off-screen or the tab is hidden.
+ * The persistent canvas for the pinned scroll beat. One mount for the whole journey
+ * — scroll mutates camera/record via the shared `progressRef` (written by GSAP),
+ * never a remount. Loaded client-only via next/dynamic. Pauses off-screen.
  */
-export default function VinylCanvas({
+export default function BeatCanvas({
+  progressRef,
   onContextLost,
 }: {
+  progressRef: React.MutableRefObject<ScrollProgress>;
   onContextLost?: () => void;
 }) {
-  const [active, setActive] = useState(true);
+  const roseRef = useRef<THREE.PointLight>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(true);
 
   useEffect(() => {
     const el = wrapRef.current;
     if (!el) return;
     const io = new IntersectionObserver(
       ([entry]) => setActive(entry.isIntersecting),
-      { threshold: 0.05 },
+      { threshold: 0.02 },
     );
     io.observe(el);
     const onVis = () => setActive(!document.hidden && !!el.offsetParent);
@@ -41,7 +48,7 @@ export default function VinylCanvas({
         frameloop={active ? "always" : "never"}
         dpr={[1, 2]}
         gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
-        camera={{ position: [0, 0, 6.6], fov: 32 }}
+        camera={{ position: [0, 1.4, 9.2], fov: 34 }}
         onCreated={({ gl }) => {
           gl.toneMapping = THREE.ACESFilmicToneMapping;
           gl.domElement.addEventListener(
@@ -54,8 +61,8 @@ export default function VinylCanvas({
           );
         }}
       >
-        <Lighting />
-        <ReactiveVinyl />
+        <Lighting roseRef={roseRef} />
+        <ScrollVinyl progressRef={progressRef} roseRef={roseRef} />
       </Canvas>
     </div>
   );

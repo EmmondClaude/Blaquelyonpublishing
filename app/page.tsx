@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { PosterFrame } from "@/components/hero/PosterFrame";
 import { ReactiveHero } from "@/components/hero/ReactiveHero";
+import { NeonConfessionBeat } from "@/components/beat/NeonConfessionBeat";
 import { Section } from "@/components/ui/Section";
+import { Reveal } from "@/components/ui/Reveal";
 import { brand, accolades, featuredSong, roster } from "@/lib/content";
 
 /**
@@ -20,29 +22,37 @@ export default function HomePage() {
       <section className="relative ej-container pt-16 sm:pt-24">
         <div className="grid items-end gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
           <div>
-            <p className="ej-label animate-ej-rise">
-              {brand.city} · R&B Publishing
-            </p>
-            <h1 className="mt-6 font-display text-6xl font-light leading-[0.98] text-ej-bone animate-ej-rise sm:text-7xl lg:text-8xl">
-              Neon
-              <br />
-              <span className="italic text-ej-gold-bright">confessions,</span>
-              <br />
-              written down.
+            <Reveal as="div">
+              <span className="ej-label">{brand.city} · R&B Publishing</span>
+            </Reveal>
+            <h1 className="mt-6 font-display text-6xl font-light leading-[0.98] text-ej-bone sm:text-7xl lg:text-8xl">
+              <Reveal>Neon</Reveal>
+              <Reveal delayMs={90}>
+                <span className="italic text-ej-gold-bright">confessions,</span>
+              </Reveal>
+              <Reveal delayMs={180}>written down.</Reveal>
             </h1>
-            <p className="mt-8 max-w-md text-lg leading-relaxed text-ej-cream animate-ej-rise">
-              {brand.tagline} A Las Vegas publishing house with{" "}
-              <span className="text-ej-bone">Emmond J Smith</span> at the
-              forefront — placing songs, building writers, moving the catalog.
-            </p>
-            <div className="mt-10 flex flex-wrap items-center gap-5 animate-ej-rise">
-              <Link href="/publishing" className="ej-cta">
-                Inquire for publishing
-              </Link>
-              <Link href="/featured" className="ej-link">
-                Hear the featured song →
-              </Link>
-            </div>
+            <Reveal
+              as="div"
+              delayMs={240}
+              className="mt-8 max-w-md text-lg leading-relaxed text-ej-cream"
+            >
+              <p>
+                {brand.tagline} A Las Vegas publishing house with{" "}
+                <span className="text-ej-bone">Emmond J Smith</span> at the
+                forefront — placing songs, building writers, moving the catalog.
+              </p>
+            </Reveal>
+            <Reveal as="div" delayMs={320}>
+              <div className="mt-10 flex flex-wrap items-center gap-5">
+                <Link href="/publishing" className="ej-cta">
+                  Inquire for publishing
+                </Link>
+                <Link href="/featured" className="ej-link">
+                  Hear the featured song →
+                </Link>
+              </div>
+            </Reveal>
           </div>
 
           {/* The reactive hero — a live spinning vinyl, gated behind a poster
@@ -51,11 +61,12 @@ export default function HomePage() {
           <ReactiveHero />
         </div>
 
-        {/* The one pinned scroll beat (Lacoste-style reveal) mounts here next. */}
-        <p className="mt-16 font-mono text-[0.7rem] uppercase tracking-label text-ej-ash animate-ej-glow">
-          ↓ Scroll — the one beat (Lacoste-style reveal) mounts here next pass
-        </p>
       </section>
+
+      {/* ───────── THE ONE PINNED SCROLL BEAT (skill move #2) ───────── */}
+      {/* Lacoste-style chaptered reveal: pin the canvas, scroll flies the camera
+          around the record as "Neon Confession" lights up and resolves. */}
+      <NeonConfessionBeat />
 
       {/* ─────────────────────── ACCOLADES STRIP ─────────────────────── */}
       <Section>

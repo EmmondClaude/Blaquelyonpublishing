@@ -4,6 +4,7 @@ import { fontVariables } from "@/lib/fonts";
 import { brand } from "@/lib/content";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
+import { SmoothScroll } from "@/components/site/SmoothScroll";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://emmondjsmith.com"),
@@ -45,6 +46,7 @@ export default function RootLayout({
         >
           Skip to content
         </a>
+        <SmoothScroll />
         <Header />
         <main id="main">{children}</main>
         <Footer />

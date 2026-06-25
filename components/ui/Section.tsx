@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Reveal } from "@/components/ui/Reveal";
 
 /**
  * Static-pass layout primitives. Server Components, no JS. The kinetic mask/split
@@ -33,14 +34,24 @@ export function PageHeader({
 }) {
   return (
     <header className="ej-container pt-20 sm:pt-28">
-      <p className="ej-label animate-ej-rise">{kicker}</p>
-      <h1 className="mt-6 max-w-4xl font-display text-5xl font-light leading-[1.04] text-ej-bone animate-ej-rise sm:text-6xl lg:text-7xl">
-        {title}
-      </h1>
+      <Reveal as="div">
+        <span className="ej-label">{kicker}</span>
+      </Reveal>
+      <Reveal
+        as="div"
+        delayMs={80}
+        className="mt-6 max-w-4xl font-display text-5xl font-light leading-[1.04] text-ej-bone sm:text-6xl lg:text-7xl"
+      >
+        <h1>{title}</h1>
+      </Reveal>
       {lead ? (
-        <p className="mt-8 max-w-prose text-lg leading-relaxed text-ej-cream animate-ej-rise">
-          {lead}
-        </p>
+        <Reveal
+          as="div"
+          delayMs={160}
+          className="mt-8 max-w-prose text-lg leading-relaxed text-ej-cream"
+        >
+          <p>{lead}</p>
+        </Reveal>
       ) : null}
       <hr className="ej-rule mt-14" />
     </header>
